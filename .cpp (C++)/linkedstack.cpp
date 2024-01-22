@@ -58,9 +58,9 @@ int main(){
     stk_ptr s = stack_new();
     push(s,2);
     push(s,3);
-    printf("%d\n",pop(s));
+    cout << pop(s) << '\n';
     push(s,4);
-    printf("%d\n",pop(s));
+    cout << pop(s) << '\n';
     stack_free(s);
 
     return 0;
