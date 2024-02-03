@@ -1,3 +1,6 @@
+# Author: Ryan Silverberg
+# Purpose: Calculate the GCD of two numbers in N1, N2 memory and put in GCD memory
+
 .text
 .global _start
 .org 0x0000
@@ -41,7 +44,7 @@ ContinueEuclidean:
 
 EndLoop:
 
-    stw r6, GCD(r0)
+    stw r6, GCD(r0)     # Store GCD in memory
 
     ldw r2, 0(sp)       # Dividend
     ldw r3, 4(sp)       # Divisor
