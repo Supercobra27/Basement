@@ -25,6 +25,8 @@ CalculateGCD:
 
 Loop:
 
+    beq r3,r0, EndLoop  # If Divisor 0
+
 CalcRemainder:
     div r4, r2,r3       # Divide Dividend/Divisor
     mul r5, r4,r3       # Multiply Quotient*Divisor
@@ -32,15 +34,12 @@ CalcRemainder:
 
 ContinueEuclidean:
     mov r2, r3          # Move Divisor --> Dividend
+    mov r6, r3          # Store current GCD <-- Divisor
     mov r3, r5          # Move Remainder --> Divisor
-
-    beq r5, r0, SkipIf   # Skip if equals 0
-
-    mov r6, r5          # Store current GCD
     
     bge r5,r0, Loop     # If remainder > 0
 
-SkipIf:
+EndLoop:
 
     stw r6, GCD(r0)
 
