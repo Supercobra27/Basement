@@ -37,7 +37,11 @@ ContinueEuclidean:
     mov r6, r3          # Store current GCD <-- Divisor
     mov r3, r5          # Move Remainder --> Divisor
     
+<<<<<<< HEAD
     bge r5,r0, Loop     # If remainder > 0
+=======
+    br Loop             # If remainder > 0
+>>>>>>> 423bf278b9b56b2900bcd426e164e8ac2bcce9e8
 
 EndLoop:
 
