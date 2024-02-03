@@ -38,7 +38,7 @@ ContinueEuclidean:
 
     mov r6, r5          # Store current GCD
     
-    bgt r5,r0, Loop     # If remainder > 0
+    bge r5,r0, Loop     # If remainder > 0
 
 SkipIf:
 
