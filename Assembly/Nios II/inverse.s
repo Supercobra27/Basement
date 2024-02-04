@@ -14,32 +14,20 @@ _end:
     break
 
 Inverse:
-    subi sp,sp,8
-    stw ra, 0(sp)
-    stw r2, 4(sp)
-
-    call CalculateGCD
-    ldw r2, GCD(r0)
-
-
-
-
-
-    ldw ra, 0(sp)
-    ldw r2, 4(sp)
-    addi sp,sp,4
-    ret
-
-CalculateGCD:
-    subi sp,sp,20       # Allocate Stack Memory
+    subi sp,sp,32       # Allocate Stack Memory
     stw r2, 0(sp)       # Dividend
     stw r3, 4(sp)       # Divisor
     stw r4, 8(sp)       # Quotient
     stw r5, 12(sp)      # Remainder
     stw r6, 16(sp)      # GCD Holder
+    stw r7, 20(sp)      # X1
+    stw r8, 24(sp)      # Y1
+    stw r9, 28(sp)      # Arithmetic Holder
 
-    movia r2, N1        # mov address of N1
-    movia r3, N2        # mov address of N2
+    movia r2, NUM    	# mov address of N1
+    movia r3, MOD     	# mov address of N2
+    movi r7, 0          # Store Init Value of X1
+    movi r8, 1          # Store Init Value of Y1
     ldw r2, 0(r2)       # load immediate
     ldw r3, 0(r3)       # load immediate
 
@@ -49,6 +37,9 @@ Loop:
 
 CalcRemainder:
     div r4, r2,r3       # Divide Dividend/Divisor
+    mul r9, r4,r7       # Multiply first half of Extended Euclidean
+    mov r8, r7          # Move X into Y
+    sub r7, r8,r9       # Complete Euclidean Calculation
     mul r5, r4,r3       # Multiply Quotient*Divisor
     sub r5, r2,r5       # Subtract Dividend-(Quotient*Divisor)
 
@@ -62,23 +53,27 @@ ContinueEuclidean:
 EndLoop:
 
     stw r6, GCD(r0)     # Store GCD in memory
+    stw r7, X(r0)		# Store X in memory
+    stw r8, Y(r0)    	# Store Y in memory
 
     ldw r2, 0(sp)       # Dividend
     ldw r3, 4(sp)       # Divisor
     ldw r4, 8(sp)       # Quotient
     ldw r5, 12(sp)      # Remainder
     ldw r6, 16(sp)      # GCD Holder
-    addi sp,sp,20       # Deallocate Stack Memory
+    ldw r7, 20(sp)      # X1
+    ldw r8, 24(sp)      # Y1
+    ldw r9, 28(sp)      # Arithmetic Holder
+    addi sp,sp,32       # Deallocate Stack Memory
 
     ret
 
-
 .org 0x1000
-N1: .word 4
-N2: .word 2
+NUM: .word 123
+MOD: .word 4567
 
-I1: .skip 4
-I2: .skip 4
+X: .skip 4
+Y: .skip 4
 
 GCD: .skip 4
 
