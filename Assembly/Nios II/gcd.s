@@ -58,8 +58,8 @@ EndLoop:
 
 .org 0x1000
 
-N1:     .word 4
-N2:     .word 2
+N1:     .word 123
+N2:     .word 4567
 GCD:    .skip 4
 
 
