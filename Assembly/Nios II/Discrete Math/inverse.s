@@ -1,5 +1,6 @@
 # Author: Ryan Silverberg
 # Purpose: Calculate the Extended Euclidean Algorithm
+# Soon? - Recursive Algorithm
 
 .text
 .global _start
@@ -12,24 +13,6 @@ _start:
 
 _end:
     break
-
-# Recursive Attempt
-InverseRecursive:
-    movi r2, 123
-    movi r3, 4567
-    movi r6, 0
-    movi r7, 1
-    movi r8, 1
-    movi r9, 0
-
-BaseCase:
-    bne r2, r0, Recursion
-    movi r8, 1
-    movi r9, 0
-    ret
-Recursion:
-    
-    
 
 # Iterative Attempt
 InverseIterative:
@@ -49,25 +32,25 @@ InverseIterative:
     movi r8, 1          # Move 1 into X
     movi r9, 0          # Move 0 into Y
 
-    movi r2, 123        # Get Modulus
-    movi r3, 4567       # Get Number
+    movi r2, 123        # Get Modulus B1
+    movi r3, 4567       # Get Number A1
 
 Loop:
 
 CalcInverse:
-    div r4, r3, r2      # Divide Dividend/Divisor (Q)
+    div r4, r3, r2      # Q = A1/B1
 
 CalcX:
     mov r11, r8         # Store init X
     mov r8, r6          # Move X <-- X1
     mul r10, r4, r6     # Q*X1
-    sub r8, r11, r10    # X-Q*X1
+    sub r6, r11, r10    # X-Q*X1
 
 CalcY:
     mov r11, r9        # Store init Y
     mov r9, r7         # Move Y <-- Y1
     mul r10, r4, r7    # Q*Y1
-    sub r9, r11, r10   # Y-Q*Y1
+    sub r7, r11, r10   # Y-Q*Y1
 
 CalcGCD:
     mov r11, r3         # Store init A1
@@ -76,9 +59,10 @@ CalcGCD:
     sub r2, r11, r10    # A1-Q*B1
 
 StoreInverse:
-    stw r2, GCD(r0)     # Store GCD in memory
     stw r8, X(r0)       # Store X in memory
     stw r9, Y(r0)       # Store Y in memory
+    beq r2, r0, EndLoop # If GCD = 0, break before it stores
+    stw r2, GCD(r0)     # Store GCD in memory
     
     bgt r2,r0, Loop     # If B1 > 0
 
