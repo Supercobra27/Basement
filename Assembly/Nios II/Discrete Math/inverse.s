@@ -8,12 +8,31 @@
 
 _start:
     movia sp, 0x7FFFFC  # Initialize Stack Pointer
-    call Inverse
+    call InverseIterative
 
 _end:
     break
 
-Inverse:
+InverseRecursive:
+    movi r2, 123
+    movi r3, 4567
+    movi r6, 0
+    movi r7, 1
+    movi r8, 1
+    movi r9, 0
+
+BaseCase:
+    bne r2, r0, Recursion
+    movi r8, 1
+    movi r9, 0
+    ret
+Recursion:
+
+
+
+    
+# Iterative Attempt
+InverseIterative:
     subi sp,sp,36       # Allocate Stack Memory
     stw r2, 0(sp)       # Modulus (B1)
     stw r3, 4(sp)       # Number (A1)
@@ -34,7 +53,6 @@ Inverse:
     movi r3, 4567       # Get Number
 
 Loop:
-    beq r3,r0, EndLoop  # If Divisor 0
 
 CalcInverse:
     div r4, r3, r2      # Divide Dividend/Divisor (Q)
@@ -62,7 +80,7 @@ StoreInverse:
     stw r8, X(r0)       # Store X in memory
     stw r9, Y(r0)       # Store Y in memory
     
-    br Loop             # If B1 > 0
+    bgt r2,r0, Loop     # If B1 > 0
 
 EndLoop:
 
@@ -78,6 +96,7 @@ EndLoop:
     addi sp,sp,36       # Deallocate Stack Memory
 
     ret
+
 
 .org 0x1000
 
