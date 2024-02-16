@@ -2,6 +2,8 @@
 .global _start
 .org 0x0000
 
+# Source: https://cp-algorithms.com/algebra/binary-exp.html
+
 _start:
     movia sp, 0x7FFFFC
     call primeExp
