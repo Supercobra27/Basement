@@ -4,8 +4,8 @@
 .text
 
 main:
-    push rbp        ; Push onto the stack
-    mov rbp, rsp    ; Move the stack pointer onto the base pointer
+    push rbp                ; Push onto the stack
+    mov rbp, rsp            ; Move the stack pointer onto the base pointer
     mov DW PTR [rbp-4], 4567
     mov DW PTR [rbp-8], 123
     mov rax, DW PTR [rbp-4]
