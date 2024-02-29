@@ -42,7 +42,7 @@ printString:
 Loop:
     ldb r2, 0(r5)
 if:
-    beq r5, r0, end
+    beq r2, r0, end
 continue:
     call printChar
     addi r5, r5, 1
